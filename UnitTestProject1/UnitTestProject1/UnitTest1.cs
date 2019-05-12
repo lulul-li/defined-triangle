@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using ExpectedObjects;
 using NUnit.Framework;
 
 namespace UnitTestProject1
@@ -30,7 +32,6 @@ namespace UnitTestProject1
 
         [TestCase(6, 7, 12)]
         [TestCase(15, 10, 21)]
-        [TestCase(3, 10, 15)]
         public void when_two_side_square_sum_less_then_one_side_should_be_obtuse_triangle(int side1, int side2, int side3)
         {
             var triangle = new Triangle(side1, side2, side3);
@@ -39,5 +40,15 @@ namespace UnitTestProject1
 
             Assert.AreEqual(expect, type);
         }
+
+        [Test]
+        public void when_three_side_are_same_should_be_equilateral_triangle()
+        {
+            var triangle = new Triangle(3, 3, 3);
+            var type = triangle.GetTriangleType();
+            var expect = new List<string>() { "Equilateral triangle", "Acute triangle" }.ToExpectedObject();
+            expect.ShouldEqual(type.ToList());
+        }
+
     }
 }
