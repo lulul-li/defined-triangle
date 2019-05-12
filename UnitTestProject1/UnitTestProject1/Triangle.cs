@@ -18,7 +18,13 @@ namespace UnitTestProject1
                 {IsObtuseTriangle, "Obtuse triangle"},
                 {IsAcuteTriangle, "Acute triangle"},
                 {IsEquilateralTriangle, "Equilateral triangle"},
+                {IsIsoscelesTriangle, "Isosceles triangle"},
             };
+        }
+
+        private bool IsIsoscelesTriangle()
+        {
+            return _sides[1] == _sides[2] &&!IsEquilateralTriangle();
         }
 
         public IEnumerable<string> GetTriangleType()
@@ -26,6 +32,7 @@ namespace UnitTestProject1
             if (!IsTriangle())
             {
                 yield return "Not triangle";
+                yield break;
             }
 
             foreach (var typeCondition in _typeConditions)

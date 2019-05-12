@@ -20,7 +20,6 @@ namespace UnitTestProject1
         }
 
         [TestCase(10, 12, 15)]
-        [TestCase(3, 3, 2)]
         public void when_two_side_square_sum_more_then_one_side_should_be_acute_triangle(int side1, int side2, int side3)
         {
             var triangle = new Triangle(side1, side2, side3);
@@ -50,5 +49,22 @@ namespace UnitTestProject1
             expect.ShouldEqual(type.ToList());
         }
 
+        [Test]
+        public void when_two_side_sum_less_then_one_side_should_be_not_triangle()
+        {
+            var triangle = new Triangle(100, 3, 3);
+            var type = triangle.GetTriangleType();
+            var expect = new List<string>() { "Not triangle" }.ToExpectedObject();
+            expect.ShouldEqual(type.ToList());
+        }
+
+        [Test]
+        public void when_two_side_are_same_should_be_isosceles_triangle()
+        {
+            var triangle = new Triangle(6, 6, 3);
+            var type = triangle.GetTriangleType();
+            var expect = new List<string>() { "Isosceles triangle", "Acute triangle" }.ToExpectedObject();
+            expect.ShouldEqual(type.ToList());
+        }
     }
 }
