@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace UnitTestProject1
@@ -7,76 +6,38 @@ namespace UnitTestProject1
     [TestFixture]
     public class UnitTest1
     {
-        [Test]
-        public void when_side_3_4_5_should_be_right_triangle()
+        [TestCase(3, 4, 5)]
+        [TestCase(8, 15, 17)]
+        [TestCase(20, 21, 29)]
+        public void when_two_side_square_sum_equal_one_side_should_be_right_triangle(double side1, double side2, double side3)
         {
-            var triangle = new Triangle(3.0, 4.0, 5.0);
+            var triangle = new Triangle(side1, side2, side3);
             var type = triangle.GetTriangleType();
-            Assert.AreEqual("Right triangle", type);
+            var expect = new List<string>() { "Right triangle" };
+            Assert.AreEqual(expect, type);
         }
 
-        [Test]
-        public void when_side_10_12_15_should_be_acute_triangle()
+        [TestCase(10, 12, 15)]
+        [TestCase(3, 3, 2)]
+        public void when_two_side_square_sum_more_then_one_side_should_be_acute_triangle(int side1, int side2, int side3)
         {
-            var triangle = new Triangle(10, 12, 15);
+            var triangle = new Triangle(side1, side2, side3);
             var type = triangle.GetTriangleType();
-            Assert.AreEqual("Acute triangle", type);
+            var expect = new List<string>() { "Acute triangle" };
+
+            Assert.AreEqual(expect, type);
         }
 
-        [Test]
-        public void when_side_6_7_12_should_be_obtuse_triangle()
+        [TestCase(6, 7, 12)]
+        [TestCase(15, 10, 21)]
+        [TestCase(3, 10, 15)]
+        public void when_two_side_square_sum_less_then_one_side_should_be_obtuse_triangle(int side1, int side2, int side3)
         {
-            var triangle = new Triangle(6, 7, 10);
+            var triangle = new Triangle(side1, side2, side3);
             var type = triangle.GetTriangleType();
-            Assert.AreEqual("Obtuse triangle", type);
-        }
-    }
+            var expect = new List<string>() { "Obtuse triangle" };
 
-    public class Triangle
-    {
-        private readonly double _side1;
-        private readonly double _side2;
-        private readonly double _side3;
-
-        public Triangle(double side1, double side2, double side3)
-        {
-            _side1 = side1;
-            _side2 = side2;
-            _side3 = side3;
-        }
-
-        public string GetTriangleType()
-        {
-            var sides = new[] { _side1, _side2, _side3 }.OrderBy(x => x).ToArray();
-
-            if (IsRightTriangle(sides))
-            {
-                return "Right triangle";
-            }
-            else if (IsAcuteTriangle(sides))
-
-            {
-                return "Acute triangle";
-            }
-            else
-            {
-                return "Obtuse triangle";
-            }
-        }
-
-        private static bool IsAcuteTriangle(double[] sides)
-        {
-            return square(sides[0]) + square(sides[1]) > square(sides[2]);
-        }
-
-        private static bool IsRightTriangle(double[] sides)
-        {
-            return square(sides[0]) + square(sides[1]) == square(sides[2]);
-        }
-
-        private static double square(double number)
-        {
-            return Math.Pow(number, 2);
+            Assert.AreEqual(expect, type);
         }
     }
 }
